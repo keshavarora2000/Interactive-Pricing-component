@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Interactive pricing component | Frontend Mentor</title>
+
+  <!-- STYLESHEET LINK  -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- GOOGLE FONTS  -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+  <div class="container">
+
+    <div class="head">
+      <h2>Simple, traffic-based pricing</h2>
+      <p>Sign-up for our 30-day trial.</p>
+      <p>No credit card required.</p>
+    </div>
+
+    <div class="block">
+      <div class="views"><span>100k</span> pageviews</div>
+      <div class="main">
+        <input type="range" name="slider" id="slider" min="1" max="5" value="3">
+        <div id="selector">
+          <div class="selectBtn"></div>
+        </div>
+        <div id="progress"></div>
+      </div>
+      <div class="price">
+        <div class="rate">
+          <h3>&dollar;<span class="ap">16.00</span></h3>
+          <span class="month">&ensp;/month</span>
+        </div>
+      </div>
+      <div class="billing-type">
+        <div class="monthly">Monthly Billing</div>
+        <!-- <img src="./images/enable.png" alt="on switch" class="enable"> -->
+        <!-- <img src="./images/disable.png" alt="off switch" class="disable"> -->
+        <div class="toggle-switch" id="switch">
+        </div>
+        <div class="yearly">Yearly Billing <span class="discount">-25%</span> </div>
+      </div>
+      <hr>
+      <ul class="list">
+        <li>Unlimited Websites</li>
+        <li>100% data ownership</li>
+        <li>Email reports</li>
+      </ul>
+      <button class="trial">Start my trial</button>
+    </div>
+  </div>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Keshav Arora</a>.
+  </div>
+
+    <!-- FONT AWESOME KIT CODE  -->
+    <script src="https://kit.fontawesome.com/b2dc16cd4d.js" crossorigin="anonymous"></script>
+
+    <!-- SOME FUNCTIONS  -->
+    <script>
+      const slider = document.getElementById('slider');
+      const selector = document.getElementById('selector');
+      const progress = document.getElementById('progress');
+      const togg = document.getElementById('switch');
+      const views = document.querySelector('.views span');
+      const ap = document.querySelector('.ap');
+
+      // INITIALIZE
+      togg.innerHTML = `<img src="./images/disable.png" alt="off switch" class="disable">`;
+
+
+      let view = '100k';
+      let rate = 16.00;
+      let mul = 1;
+
+      slider.oninput = function() {
+
+        selector.style.left = (((this.value - 1) * 22.5) + 5) + "%";
+        progress.style.width = ((this.value - 1) * 22.5) + "%";
+
+        mul = togg.childNodes[0].classList.contains('disable') ? 1 : 0.75;
+
+        calculatePrice(mul, this.value);
+      }
+      
+      let toggleFun = () => {
+        if(togg.childNodes[0].classList.contains('disable')) {
+          togg.innerHTML = `<img src="./images/enable.png" alt="on switch" class="enable">`;
+          mul = 0.75;
+          ap.innerHTML = ap.innerHTML * mul;
+        }
+          else {
+            togg.innerHTML = `<img src="./images/disable.png" alt="off switch" class="disable">`;
+            mul = 1;
+            ap.innerHTML = (ap.innerHTML / 0.75);
+          }
+      }
+
+      togg.onclick = () => toggleFun();
+
+
+
+      let calculatePrice = (div, value) => {
+
+        if(value == 1) {
+          views.innerHTML = '10k';
+          ap.innerHTML = 8.00 * div;
+        } 
+          else if (value == 2){
+                views.innerHTML = '50k';
+                ap.innerHTML = 12.00 * div;
+                } 
+                  else if (value == 3){
+                        views.innerHTML = '100k';
+                        ap.innerHTML = 16.00 * div;
+                        } 
+                          else if (value == 4){
+                                views.innerHTML = '500k';
+                                ap.innerHTML = 24.00 * div;
+                                } 
+                                  else if (value == 5){
+                                        views.innerHTML = '1m';
+                                        ap.innerHTML = 36.00 * div;
+                                        }
+      }
+
+
+
+    </script>
+
+
+
+</body>
+</html>
